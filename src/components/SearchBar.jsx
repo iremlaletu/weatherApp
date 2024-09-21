@@ -1,10 +1,16 @@
 import { useState } from "react";
-import { BiCurrentLocation, BiSearch } from "react-icons/bi";
+import { BiCurrentLocation } from "react-icons/bi";
+import { GEO_API_URL, geoApiOptions } from "../services/cityService";
+import { AsyncPaginate } from "react-select-async-paginate";
+
 const SearchBar = ({ setQuery, setUnits }) => {
   const [city, setCity] = useState("");
-  const handleCitySearch = () => {
-    if (city !== "") setQuery({ q: city });
+
+  const handleCitySearch = (searchCity) => {
+    setCity(searchCity);
+    if (searchCity !== "") setQuery({ q: searchCity.label });
   };
+
   const handleLocationClick = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -13,28 +19,38 @@ const SearchBar = ({ setQuery, setUnits }) => {
       });
     }
   };
+
+  // Modifies the URL to fetch city data
+  const loadOptions = (inputValue) => {
+    return fetch(
+      ` ${GEO_API_URL}/cities?minPopulation=100000&namePrefix=${inputValue} `,
+      geoApiOptions
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        return {
+          options: res.data.map((city) => {
+            return {
+              value: `${city.latitude} ${city.longitude}`,
+              label: ` ${city.name}`,
+            };
+          }),
+        };
+      })
+      .catch((err) => console.error(err));
+  };
+
   return (
     <section className="flex flex-col items-center my-5 lg:my-8">
       <div className="flex flex-row w-3/4 items-center justify-center space-x-4">
-        <input
-          value={city}
-          onChange={(e) => setCity(e.currentTarget.value)}
-          type="text"
+        <AsyncPaginate
           placeholder="Search by city.."
-          className="text-black p-2 w-full shadow-md rounded-xl focus:outline-none"
+          debounceTimeout={600}
+          value={city}
+          loadOptions={loadOptions}
+          onChange={handleCitySearch}
+          className="text-black w-full shadow-md rounded-xl"
         />
-        <div className="relative flex justify-center items-center">
-          <div className="group flex justify-center transition-all rounded-full p-1">
-            <BiSearch
-              size={20}
-              className="cursor-pointer"
-              onClick={handleCitySearch}
-            />
-            <span className="absolute opacity-0 group-hover:opacity-100 group-hover:-translate-y-7 duration-700 text-sm">
-              search
-            </span>
-          </div>
-        </div>
         <div className="relative flex justify-center items-center">
           <div className="group flex justify-center transition-all rounded-full p-1">
             <BiCurrentLocation

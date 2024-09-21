@@ -106,7 +106,7 @@ const Details = ({
         </div>
       </div>
       <div className="flex flex-col space-y-2">
-        <Forecast title="3 Hour Step Forecast" data={weather.hourly} />
+        <Forecast title="3 Hour Forecast" data={weather.hourly} />
         <Forecast title="5 Day Forecast" data={weather.daily} />
       </div>
     </section>

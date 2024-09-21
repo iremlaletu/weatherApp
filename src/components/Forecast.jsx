@@ -9,8 +9,8 @@ const Forecast = ({ title, data }) => {
             key={index}
             className="w-[119px] h-60 bg-[#DCDFE4] rounded-3xl p-4 flex flex-col justify-between"
           >
-            <h3 className="text-l"> {d.title} </h3>
-
+            <h3> {d.title} </h3>
+            <h6> {d.desc} </h6>
             <div className="gap-4">
               <img src={d.icon} alt="weather icon" />
               <h4 className="font-sans text-3xl"> {`${d.temp.toFixed()}`} </h4>

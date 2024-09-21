@@ -34,7 +34,8 @@ const formatCurrent = (data) => {
     wind: { speed },
     timezone,
   } = data;
-  // console.log(data);
+
+  //console.log(data);
 
   const { main: details, icon } = weather[0];
 
@@ -69,6 +70,7 @@ const formatTheForecastWeather = (secs, offset, data) => {
       title: formatToLocalTime(f.dt, offset, "hh:mm a"),
       icon: iconUrlFromCode(f.weather[0].icon),
       date: f.dt_txt,
+      desc: f.weather[0].description,
     }))
     .slice(0, 5);
 
@@ -80,6 +82,7 @@ const formatTheForecastWeather = (secs, offset, data) => {
       title: formatToLocalTime(f.dt, offset, "ccc"),
       icon: iconUrlFromCode(f.weather[0].icon),
       date: f.dt_txt,
+      desc: f.weather[0].description,
     }));
 
   return { hourly, daily };

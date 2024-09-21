@@ -34,7 +34,11 @@ const App = () => {
       <div className="mx-auto max-w-screen-xl px-1">
         {weather && <Details weather={weather} units={units} />}
       </div>
-      <ToastContainer autoClose={2500} hideProgressBar={true} theme="colored" />
+      <ToastContainer
+        autoClose={2500}
+        hideProgressBar={false}
+        theme="colored"
+      />
     </>
   );
 };
