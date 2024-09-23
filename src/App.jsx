@@ -25,8 +25,8 @@ const App = () => {
   }, [query, units]);
 
   return (
-    <>
-      <div className="mx-auto max-w-screen-lg mt-3">
+    <div className="bg-custom-bg bg-cover bg-center min-h-screen">
+      <div className="mx-auto max-w-screen-lg">
         <Header setQuery={setQuery} />
         <SearchBar setQuery={setQuery} setUnits={setUnits} />
       </div>
@@ -34,12 +34,13 @@ const App = () => {
       <div className="mx-auto max-w-screen-xl px-1">
         {weather && <Details weather={weather} units={units} />}
       </div>
+
       <ToastContainer
         autoClose={2500}
         hideProgressBar={false}
         theme="colored"
       />
-    </>
+    </div>
   );
 };
 

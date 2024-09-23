@@ -15,7 +15,7 @@ const Header = ({ setQuery }) => {
         {cities.map((city) => (
           <button
             key={city.id}
-            className="border-b mx-8 my-1 min-w-[100px] p-2 text-center"
+            className="mx-8 my-1 min-w-[100px] p-2 text-center"
             onClick={() => setQuery({ q: city.name })}
           >
             {city.name}

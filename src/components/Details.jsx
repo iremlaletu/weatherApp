@@ -78,7 +78,7 @@ const Details = ({
           name={name}
           country={country}
         />
-        <div className="bg-[#DCDFE4] rounded-3xl p-4 shadow-lg ">
+        <div className=" bg-white/10 backdrop-blur-sm ring-1 ring-black/5 rounded-xl p-4 shadow-lg ">
           <div className="flex justify-between">
             <div>
               <h3 className="text-xl font-semibold">Today</h3>

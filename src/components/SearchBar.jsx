@@ -41,39 +41,37 @@ const SearchBar = ({ setQuery, setUnits }) => {
   };
 
   return (
-    <section className="flex flex-col items-center my-5 lg:my-8">
-      <div className="flex flex-row w-3/4 items-center justify-center space-x-4">
-        <AsyncPaginate
-          placeholder="Search by city.."
-          debounceTimeout={600}
-          value={city}
-          loadOptions={loadOptions}
-          onChange={handleCitySearch}
-          className="text-black w-full shadow-md rounded-xl"
-        />
-        <div className="relative flex justify-center items-center">
-          <div className="group flex justify-center transition-all rounded-full p-1">
-            <BiCurrentLocation
-              size={20}
-              className="cursor-pointer"
-              onClick={handleLocationClick}
-            />
-            <span className="absolute opacity-0 group-hover:opacity-100 group-hover:translate-y-7 duration-700 text-sm">
-              current location
-            </span>
-          </div>
+    <section className="mx-auto p-2 w-full flex flex-col lg:flex-row items-center justify-center my-5 lg:my-8 space-y-4 lg:space-y-0 space-x-2">
+      <AsyncPaginate
+        placeholder="Search by city.."
+        debounceTimeout={600}
+        value={city}
+        loadOptions={loadOptions}
+        onChange={handleCitySearch}
+        className="text-black w-11/12 shadow-md rounded-xl"
+      />
+      <div className="relative flex justify-center items-center">
+        <div className="group flex justify-center transition-all rounded-full p-1">
+          <BiCurrentLocation
+            size={20}
+            className="cursor-pointer"
+            onClick={handleLocationClick}
+          />
+          <span className="absolute opacity-0 group-hover:opacity-100 group-hover:translate-y-7 duration-700 text-sm">
+            current location
+          </span>
         </div>
       </div>
-      <div className="flex flex-row w-1/4 items-center justify-center mt-4">
+      <div className="flex flex-row">
         <button
-          className="text-xl transition ease-out hover:scale-125 font-light"
+          className="text-lg transition ease-out hover:scale-125 font-light"
           onClick={() => setUnits("metric")}
         >
           °C
         </button>
-        <p className="text-2xl mx-2 ">|</p>
+        <p className="text-2xl mx-2">|</p>
         <button
-          className="text-xl transition ease-out hover:scale-125 font-light"
+          className="text-lg transition ease-out hover:scale-125 font-light"
           onClick={() => setUnits("imperial")}
         >
           °F
