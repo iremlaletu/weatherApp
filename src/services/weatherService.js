@@ -13,7 +13,7 @@ const getWeatherData = (infoType, searchParams) => {
 
 // icon code to url for show if rain or sunny img etc
 const iconUrlFromCode = (icon) =>
-  `http://openweathermap.org/img/wn/${icon}@2x.png`;
+  `https://openweathermap.org/img/wn/${icon}@2x.png`;
 
 // belirli bir zaman dilimine göre UTC zamanını yerel zaman formatına dönüştürme Luxon "convert"
 const formatToLocalTime = (

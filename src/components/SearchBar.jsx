@@ -13,10 +13,20 @@ const SearchBar = ({ setQuery, setUnits }) => {
 
   const handleLocationClick = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        setQuery({ lat: latitude, lon: longitude });
-      });
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setQuery({ lat: latitude, lon: longitude });
+        },
+        (error) => {
+          console.error("Geolocation error:", error.message);
+          alert(
+            "Location information could not be obtained. Please allow access."
+          );
+        }
+      );
+    } else {
+      alert("Your browser does not support location services.");
     }
   };
 
@@ -57,7 +67,7 @@ const SearchBar = ({ setQuery, setUnits }) => {
             className="cursor-pointer"
             onClick={handleLocationClick}
           />
-          <span className="absolute opacity-0 group-hover:opacity-100 group-hover:translate-y-7 duration-700 text-sm">
+          <span className="absolute opacity-0 group-hover:opacity-100 group-hover:translate-x-10 lg:group-hover:translate-x-0 lg:group-hover:translate-y-7  duration-700 text-sm">
             current location
           </span>
         </div>
