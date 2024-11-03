@@ -5,7 +5,7 @@ const Header = ({ setQuery }) => {
     { id: 3, name: "Sydney" },
     { id: 4, name: "Tokyo" },
     { id: 5, name: "Paris" },
-    { id: 6, name: "Istanbul" },
+    { id: 6, name: "Ankara" },
   ];
 
   return (
@@ -15,7 +15,7 @@ const Header = ({ setQuery }) => {
         {cities.map((city) => (
           <button
             key={city.id}
-            className="mx-8 my-1 min-w-[100px] p-2 text-center"
+            className="mx-8 my-1 min-w-[100px] p-2 text-center border-b border-slate-500"
             onClick={() => setQuery({ q: city.name })}
           >
             {city.name}

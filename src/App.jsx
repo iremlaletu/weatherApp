@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Details from "./components/Details";
 import Header from "./components/Header";
 import SearchBar from "./components/SearchBar";
@@ -7,22 +7,26 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
-  const [query, setQuery] = useState({ q: "adana" });
+  const [query, setQuery] = useState({ q: "istanbul" });
   const [units, setUnits] = useState("metric");
   const [weather, setWeather] = useState(null);
 
-  const getWeather = async () => {
+  const getWeather = useCallback(async () => {
     const cityName = query.q ? query.q : "current location";
-    toast.info(` Fetching weather data for ${cityName} `);
-    await getFormattedWeatherData({ ...query, units }).then((data) => {
-      toast.success(` Fetch Completed ${data.name}, ${data.country} `);
+    toast.info(`Fetching weather data for ${cityName}`);
+
+    try {
+      const data = await getFormattedWeatherData({ ...query, units });
+      toast.success(`Fetch Completed ${data.name}, ${data.country}`);
       setWeather(data);
-    });
-  };
+    } catch (error) {
+      toast.error(`City not found: ${cityName} ${error.message}`);
+    }
+  }, [query, units]);
 
   useEffect(() => {
     getWeather();
-  }, [query, units]);
+  }, [getWeather]);
 
   return (
     <div className="bg-custom-bg bg-cover bg-center min-h-screen">

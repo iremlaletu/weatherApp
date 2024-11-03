@@ -8,7 +8,14 @@ const getWeatherData = (infoType, searchParams) => {
   const url = new URL(BASE_URL + infoType);
   url.search = new URLSearchParams({ ...searchParams, appid: API_KEY });
 
-  return fetch(url).then((res) => res.json());
+  return fetch(url).then(async (res) => {
+    const data = await res.json();
+    if (!res.ok) {
+      console.error(`Error ${data.cod}: ${data.message}`);
+      throw new Error(`Error ${data.cod}: ${data.message}`);
+    }
+    return data;
+  });
 };
 
 // icon code to url for show if rain or sunny img etc
@@ -35,7 +42,7 @@ const formatCurrent = (data) => {
     timezone,
   } = data;
 
-  //console.log(data);
+  // console.log(data);
 
   const { main: details, icon } = weather[0];
 
@@ -89,21 +96,25 @@ const formatTheForecastWeather = (secs, offset, data) => {
 };
 
 const getFormattedWeatherData = async (searchParams) => {
-  const formattedCurrentWeather = await getWeatherData(
-    "weather",
-    searchParams
-  ).then(formatCurrent);
+  try {
+    const formattedCurrentWeather = await getWeatherData(
+      "weather",
+      searchParams
+    ).then(formatCurrent);
 
-  const { dt, lat, lon, timezone } = formattedCurrentWeather;
+    const { dt, lat, lon, timezone } = formattedCurrentWeather;
 
-  // modifying url with "forecast" endpoint
-  const formattedForecastWeather = await getWeatherData("forecast", {
-    lat,
-    lon,
-    units: searchParams.units,
-  }).then((d) => formatTheForecastWeather(dt, timezone, d.list));
+    const formattedForecastWeather = await getWeatherData("forecast", {
+      lat,
+      lon,
+      units: searchParams.units,
+    }).then((d) => formatTheForecastWeather(dt, timezone, d.list));
 
-  return { ...formattedCurrentWeather, ...formattedForecastWeather };
+    return { ...formattedCurrentWeather, ...formattedForecastWeather };
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Failed to fetch weather data: ${error.message}`);
+  }
 };
 
 export default getFormattedWeatherData;
