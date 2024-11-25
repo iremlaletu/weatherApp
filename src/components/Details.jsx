@@ -36,8 +36,8 @@ const Details = ({
     {
       id: 2,
       Icon: FiWind,
-      title: "Wind",
-      value: `${speed.toFixed()} ${units === "metric" ? "km/h" : "m/s"}`,
+      title: "Wind (avg)",
+      value: `${speed.toFixed()} ${units === "metric" ? "m/s" : "m/s"}`,
     },
     {
       id: 3,
@@ -97,7 +97,7 @@ const Details = ({
               <div key={id} className="flex justify-between">
                 <div className="flex items-center space-x-2">
                   <Icon size={18} />
-                  <span>{`${title}: `}:</span>
+                  <span>{`${title} `}:</span>
                 </div>
                 <span className="font-mono text-l">{value}</span>
               </div>
